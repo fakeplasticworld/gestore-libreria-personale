@@ -1,0 +1,130 @@
+[
+  {
+    "titolo": "L\u0027amica geniale",
+    "autore": "Elena Ferrante",
+    "genere": "Romanzo",
+    "isbn": "9788804668237",
+    "valutazione": 5,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "Dune",
+    "autore": "Frank Herbert",
+    "genere": "Fantascienza",
+    "isbn": "9788804680529",
+    "valutazione": 5,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "Il racconto dell\u0027ancella",
+    "autore": "Margaret Atwood",
+    "genere": "Distopico",
+    "isbn": "9788806219338",
+    "valutazione": 4,
+    "statoLettura": "DA_LEGGERE"
+  },
+  {
+    "titolo": "Il Signore degli Anelli",
+    "autore": "J.R.R. Tolkien",
+    "genere": "Fantasy",
+    "isbn": "9788845292613",
+    "valutazione": 5,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "Sapiens. Da animali a dèi",
+    "autore": "Yuval Noah Harari",
+    "genere": "Saggistica",
+    "isbn": "9788845925392",
+    "valutazione": 5,
+    "statoLettura": "IN_LETTURA"
+  },
+  {
+    "titolo": "La ragazza del treno",
+    "autore": "Paula Hawkins",
+    "genere": "Thriller",
+    "isbn": "9788804677147",
+    "valutazione": 3,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "Cecità",
+    "autore": "José Saramago",
+    "genere": "Romanzo",
+    "isbn": "9788807881343",
+    "valutazione": 4,
+    "statoLettura": "DA_LEGGERE"
+  },
+  {
+    "titolo": "L\u0027insostenibile leggerezza dell\u0027essere",
+    "autore": "Milan Kundera",
+    "genere": "Filosofico",
+    "isbn": "9788845915867",
+    "valutazione": 4,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "Follia",
+    "autore": "Patrick McGrath",
+    "genere": "Thriller psicologico",
+    "isbn": "9788804742289",
+    "valutazione": 4,
+    "statoLettura": "DA_LEGGERE"
+  },
+  {
+    "titolo": "Il cardellino",
+    "autore": "Donna Tartt",
+    "genere": "Romanzo",
+    "isbn": "9788817066974",
+    "valutazione": 5,
+    "statoLettura": "IN_LETTURA"
+  },
+  {
+    "titolo": "1984",
+    "autore": "George Orwell",
+    "genere": "Distopico",
+    "isbn": "9788804665472",
+    "valutazione": 5,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "La versione di Barney",
+    "autore": "Mordecai Richler",
+    "genere": "Umoristico",
+    "isbn": "9788806223038",
+    "valutazione": 4,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "L\u0027uomo che scambiò sua moglie per un cappello",
+    "autore": "Oliver Sacks",
+    "genere": "Saggistica",
+    "isbn": "9788804681137",
+    "valutazione": 4,
+    "statoLettura": "DA_LEGGERE"
+  },
+  {
+    "titolo": "Circe",
+    "autore": "Madeline Miller",
+    "genere": "Fantasy",
+    "isbn": "9788806240219",
+    "valutazione": 5,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "L\u0027arte di essere fragili",
+    "autore": "Alessandro D\u0027Avenia",
+    "genere": "Saggistica",
+    "isbn": "9788845932970",
+    "valutazione": 3,
+    "statoLettura": "IN_LETTURA"
+  },
+  {
+    "titolo": "Guida galattica per gli autostoppisti",
+    "autore": "Douglas Adams",
+    "genere": "Umorismo Fantascientifico",
+    "isbn": "9788804753308",
+    "valutazione": 5,
+    "statoLettura": "IN_LETTURA"
+  }
+]

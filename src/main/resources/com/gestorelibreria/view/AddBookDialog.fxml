@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ComboBox?>
+
+<GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestorelibreria.view.AddBookDialogController">
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+    <Label text="Aggiungi un Nuovo Libro" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+        <font>
+            <Font name="System Bold" size="18" />
+        </font>
+    </Label>
+
+    <Label text="ISBN:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="isbnField" promptText="Codice ISBN" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Titolo:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="titoloField" promptText="Titolo del libro" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label text="Autore:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <TextField fx:id="autoreField" promptText="Autore del libro" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+    <Label text="Genere:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <TextField fx:id="genereField" promptText="Genere letterario" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+    <Label text="Valutazione (1-5):" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+    <TextField fx:id="valutazioneField" promptText="Es. 4" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+    <Label text="Stato Lettura:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+    <ComboBox fx:id="statoLetturaComboBox" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    
+    <HBox alignment="CENTER_RIGHT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <children>
+            <Button fx:id="okButton" onAction="#onOkClicked" text="Aggiungi" />
+            <Button onAction="#onAnnullaClicked" text="Annulla" />
+        </children>
+    </HBox>
+</GridPane>

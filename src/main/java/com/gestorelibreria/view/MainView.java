@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import com.gestorelibreria.controller.MainController;
+import com.gestorelibreria.controller.dto.LibroDTO;
 import com.gestorelibreria.controller.dto.RichiestaDTO;
 import com.gestorelibreria.model.Libro;
 import com.gestorelibreria.model.observer.Observer;
@@ -11,10 +12,14 @@ import com.gestorelibreria.model.observer.Observer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane; // <-- Import necessario
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainView implements Observer {
 
@@ -110,10 +115,37 @@ public class MainView implements Observer {
     
     @FXML
     private void onAggiungiClicked() {
-        // Qui aprirai una nuova finestra (dialog) per inserire i dati del libro
-        // e poi chiamerai controller.gestisciAggiungiLibro(dto);
-        System.out.println("Pulsante Aggiungi cliccato");
-        mostraMessaggio("Funzionalità 'Aggiungi' non ancora implementata.");
+        try {
+            // 1. Carica il file FXML del dialog
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBookDialog.fxml"));
+            GridPane page = loader.load();
+
+            // 2. Crea una nuova finestra (Stage) per il dialog
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Aggiungi Nuovo Libro");
+            dialogStage.initModality(Modality.WINDOW_MODAL); // Blocca la finestra principale
+            // dialogStage.initOwner(bookContainer.getScene().getWindow()); // Opzionale: imposta il proprietario
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // 3. Ottieni il controller del dialog e passagli lo Stage
+            AddBookDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+            // 4. Mostra il dialog e attendi che venga chiuso
+            dialogStage.showAndWait();
+
+            // 5. Se l'utente ha cliccato "Aggiungi", passa il DTO al controller principale
+            if (controller.isOkClicked()) {
+                LibroDTO nuovoLibro = controller.getLibroDTO();
+                this.controller.gestisciAggiungiLibro(nuovoLibro);
+            }
+
+        } catch (IOException e) {
+            System.err.println("Errore durante l'apertura del dialog di aggiunta libro.");
+            e.printStackTrace();
+            mostraErrore("Impossibile aprire la finestra per aggiungere il libro.");
+        }
     }
     
     @FXML
