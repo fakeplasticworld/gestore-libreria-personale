@@ -2,6 +2,7 @@ package com.gestorelibreria.view;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Optional;
 
 import com.gestorelibreria.controller.MainController;
 import com.gestorelibreria.controller.dto.LibroDTO;
@@ -15,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -40,6 +42,10 @@ public class MainView implements Observer {
 
     public void setController(MainController controller) {
         this.controller = controller;
+    }
+
+    public MainController getController() {
+        return controller;
     }
 
     /**
@@ -104,7 +110,7 @@ public class MainView implements Observer {
 
                 // Ottieni il controller della card e passagli i dati del libro
                 BookCardController cardController = loader.getController();
-                cardController.setData(libro);
+                cardController.setData(libro, this);
 
                 // Aggiungi la card al contenitore a griglia
                 bookContainer.getChildren().add(bookCardNode);
@@ -114,6 +120,44 @@ public class MainView implements Observer {
             }
         });
         System.out.println("View: Griglia aggiornata.");
+    }
+
+    public void mostraModificaDialog(LibroDTO libroDTO) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificaLibroDialog.fxml"));
+            GridPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Modifica Libro");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            ModificaLibroDialogController dialogController = loader.getController();
+            dialogController.setDialogStage(dialogStage);
+            dialogController.setLibro(libroDTO);
+
+            dialogStage.showAndWait();
+
+            if (dialogController.isOkClicked()) {
+                LibroDTO nuovoLibroDTO = dialogController.getLibroDTO();
+                controller.gestisciModificaLibro(nuovoLibroDTO, libroDTO);
+            }
+
+        } catch (IOException e) {
+            mostraErrore("Impossibile aprire la finestra per modificare il libro.");
+            e.printStackTrace();
+        }
+    }
+
+    public boolean mostraConfermaRimozione(LibroDTO libro) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Conferma Rimozione");
+        alert.setHeaderText("Sei sicuro di voler rimuovere il libro?");
+        alert.setContentText("Libro: " + libro.titolo());
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 
     public void mostraMessaggio(String messaggio) {

@@ -3,12 +3,14 @@ package com.gestorelibreria.view;
 import java.util.Arrays;
 import java.util.List;
 
+import com.gestorelibreria.controller.dto.LibroDTO;
 import com.gestorelibreria.model.Libro;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -25,7 +27,10 @@ public class BookCardController {
     @FXML
     private Label valutazione;
     @FXML
-    private Label statoLettura;
+    private ImageView statoLettura;
+
+    private Libro libro;
+    private MainView mainView;
 
     private static final List<Color> PASTEL_COLORS = Arrays.asList(
             Color.web("#ffadad"), // Rosso Pastello
@@ -41,11 +46,19 @@ public class BookCardController {
     );
 
     // Metodo per popolare la card con i dati di un libro
-    public void setData(Libro libro) {
+    public void setData(Libro libro, MainView mainView) {
+        this.libro = libro;
+        this.mainView = mainView;
         titolo.setText(libro.getTitolo());
         autore.setText(libro.getAutore());
         valutazione.setText(libro.getValutazione() + "/5");
-        statoLettura.setText(libro.getStatoLettura().toString());
+        try {
+            String iconPath = libro.getStatoLettura().getIconPath();
+            Image icon = new Image(getClass().getResourceAsStream(iconPath));
+            statoLettura.setImage(icon);
+        } catch (Exception e) {
+            System.err.println("Errore nel caricamento dell'icona: " + e.getMessage());
+        }
         int width = 150;
         int height = 230;
 
@@ -76,6 +89,27 @@ public class BookCardController {
 
         // Imposta l'immagine generata sulla ImageView della copertina
         copertina.setImage(writableImage);
+    }
+
+    @FXML
+    private void onModificaClicked() {
+        LibroDTO dto = new LibroDTO(
+            libro.getTitolo(), libro.getAutore(), libro.getIsbn(),
+            libro.getGenere(), libro.getValutazione(), libro.getStatoLettura()
+        );
+        mainView.mostraModificaDialog(dto);
+    }
+
+    @FXML
+    private void onRimuoviClicked() {
+        LibroDTO dto = new LibroDTO(
+            libro.getTitolo(), libro.getAutore(), libro.getIsbn(),
+            libro.getGenere(), libro.getValutazione(), libro.getStatoLettura()
+        );
+        if (mainView.mostraConfermaRimozione(dto)) {
+            mainView.getController().gestisciRimuoviLibro(dto);
+            mainView.mostraMessaggio("Libro rimosso con successo.");
+        }
     }
 
      /**

@@ -16,22 +16,6 @@
     "statoLettura": "LETTO"
   },
   {
-    "titolo": "Il racconto dell\u0027ancella",
-    "autore": "Margaret Atwood",
-    "genere": "Distopico",
-    "isbn": "9788806219338",
-    "valutazione": 4,
-    "statoLettura": "DA_LEGGERE"
-  },
-  {
-    "titolo": "Il Signore degli Anelli",
-    "autore": "J.R.R. Tolkien",
-    "genere": "Fantasy",
-    "isbn": "9788845292613",
-    "valutazione": 5,
-    "statoLettura": "LETTO"
-  },
-  {
     "titolo": "Sapiens. Da animali a dèi",
     "autore": "Yuval Noah Harari",
     "genere": "Saggistica",
