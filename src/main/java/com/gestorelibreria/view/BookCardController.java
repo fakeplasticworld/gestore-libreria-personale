@@ -51,7 +51,12 @@ public class BookCardController {
         this.mainView = mainView;
         titolo.setText(libro.getTitolo());
         autore.setText(libro.getAutore());
-        valutazione.setText(libro.getValutazione() + "/5");
+        if (libro.getValutazione() >= 0) {
+            valutazione.setText(libro.getValutazione() + "/5");
+            valutazione.setVisible(true);
+        } else {
+            valutazione.setVisible(false);
+        }
         try {
             String iconPath = libro.getStatoLettura().getIconPath();
             Image icon = new Image(getClass().getResourceAsStream(iconPath));

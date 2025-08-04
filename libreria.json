@@ -72,28 +72,12 @@
     "statoLettura": "LETTO"
   },
   {
-    "titolo": "L\u0027uomo che scambiò sua moglie per un cappello",
-    "autore": "Oliver Sacks",
-    "genere": "Saggistica",
-    "isbn": "9788804681137",
-    "valutazione": 4,
-    "statoLettura": "DA_LEGGERE"
-  },
-  {
     "titolo": "Circe",
     "autore": "Madeline Miller",
     "genere": "Fantasy",
     "isbn": "9788806240219",
     "valutazione": 5,
     "statoLettura": "LETTO"
-  },
-  {
-    "titolo": "L\u0027arte di essere fragili",
-    "autore": "Alessandro D\u0027Avenia",
-    "genere": "Saggistica",
-    "isbn": "9788845932970",
-    "valutazione": 3,
-    "statoLettura": "IN_LETTURA"
   },
   {
     "titolo": "Finestra sul nulla",
@@ -108,7 +92,23 @@
     "autore": "Yuval Noah Harari",
     "genere": "Saggistica",
     "isbn": "9788845925392",
-    "valutazione": 5,
+    "valutazione": 4,
+    "statoLettura": "IN_LETTURA"
+  },
+  {
+    "titolo": "L\u0027arte di essere fragili",
+    "autore": "Alessandro D\u0027Avenia",
+    "genere": "Saggistica",
+    "isbn": "9788845932970",
+    "valutazione": 3,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "Le cronache del crepuscolo",
+    "autore": "Marco Rossi",
+    "genere": "Fantasy",
+    "isbn": "9788804759331",
+    "valutazione": -1,
     "statoLettura": "IN_LETTURA"
   }
 ]

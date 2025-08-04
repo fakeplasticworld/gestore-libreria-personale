@@ -26,6 +26,7 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class MainView implements Observer {
 
@@ -94,7 +95,6 @@ public class MainView implements Observer {
         });
     }
 
-
     @Override
     public void update() {
         System.out.println("View: Ricevuto update dal Model. Ricarico i dati...");
@@ -143,10 +143,14 @@ public class MainView implements Observer {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             Scene scene = new Scene(page);
             setIconaStage(dialogStage);
+            dialogStage.setResizable(false);
 
             dialogStage.setScene(scene);
 
             ModificaLibroDialogController dialogController = loader.getController();
+
+            Window owner = bookContainer.getScene().getWindow();
+            dialogStage.initOwner(owner);
             dialogController.setDialogStage(dialogStage);
             dialogController.setLibro(libroDTO);
 
@@ -159,7 +163,6 @@ public class MainView implements Observer {
 
         } catch (IOException e) {
             mostraErrore("Impossibile aprire la finestra per modificare il libro.");
-            e.printStackTrace();
         }
     }
 
@@ -214,9 +217,12 @@ public class MainView implements Observer {
             // Crea una nuova finestra (Stage) per il dialog
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Aggiungi Nuovo Libro");
-            dialogStage.initModality(Modality.WINDOW_MODAL); // Blocca la finestra principale
-            // dialogStage.initOwner(bookContainer.getScene().getWindow()); // Opzionale:
-            // imposta il proprietario
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(bookContainer.getScene().getWindow());
+            dialogStage.setResizable(false);
+            Window owner = bookContainer.getScene().getWindow();
+            dialogStage.initOwner(owner);
+            // Crea la scena e imposta l'icona
             Scene scene = new Scene(page);
             setIconaStage(dialogStage);
             dialogStage.setScene(scene);
@@ -237,6 +243,7 @@ public class MainView implements Observer {
         } catch (IOException e) {
             System.err.println("Errore durante l'apertura del dialog di aggiunta libro.");
             mostraErrore("Impossibile aprire la finestra per aggiungere il libro.");
+            e.printStackTrace();
         }
     }
 
