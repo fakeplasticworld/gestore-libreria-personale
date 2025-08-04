@@ -21,11 +21,14 @@
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
-            <items>
+             <items>
                   <MenuItem mnemonicParsing="false" onAction="#onAggiungiClicked" text="Aggiungi Libro" />
-              <MenuItem mnemonicParsing="false" onAction="#onSalvaClicked" text="Salva" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSalvaClicked" text="Salva" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" text="Esci" />
+                  <MenuItem mnemonicParsing="false" onAction="#onImportaClicked" text="Importa Libreria..." />
+                  <MenuItem mnemonicParsing="false" onAction="#onEsportaClicked" text="Esporta Libreria..." />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#onEsciClicked" text="Esci" />
             </items>
           </Menu>
         </menus>

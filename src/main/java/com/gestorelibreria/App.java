@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -44,6 +45,15 @@ public class App extends Application {
 
             // 6. Registra la View come Observer del Model
             libreria.registraObserver(view);
+
+            try {
+                // Carica l'icona dalle risorse
+                Image appIcon = new Image(getClass().getResourceAsStream("/com/gestorelibreria/icons/icona.png"));
+                // Imposta l'icona sulla finestra principale
+                primaryStage.getIcons().add(appIcon);
+            } catch (Exception e) {
+                System.err.println("Errore durante il caricamento dell'icona dell'applicazione: " + e.getMessage());
+            }
 
             // 7. Configura e mostra la finestra principale
             primaryStage.setTitle("Gestore Libreria Personale");

@@ -16,14 +16,6 @@
     "statoLettura": "LETTO"
   },
   {
-    "titolo": "Sapiens. Da animali a dèi",
-    "autore": "Yuval Noah Harari",
-    "genere": "Saggistica",
-    "isbn": "9788845925392",
-    "valutazione": 5,
-    "statoLettura": "IN_LETTURA"
-  },
-  {
     "titolo": "La ragazza del treno",
     "autore": "Paula Hawkins",
     "genere": "Thriller",
@@ -109,6 +101,14 @@
     "genere": "Saggisticca",
     "isbn": "9788845936999",
     "valutazione": 4,
+    "statoLettura": "IN_LETTURA"
+  },
+  {
+    "titolo": "Sapiens. Da animali a dei",
+    "autore": "Yuval Noah Harari",
+    "genere": "Saggistica",
+    "isbn": "9788845925392",
+    "valutazione": 5,
     "statoLettura": "IN_LETTURA"
   }
 ]

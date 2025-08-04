@@ -1,5 +1,6 @@
 package com.gestorelibreria.view;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Optional;
@@ -19,8 +20,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane; // <-- Import necessario
+import javafx.scene.layout.TilePane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -48,6 +51,15 @@ public class MainView implements Observer {
         return controller;
     }
 
+    private void setIconaStage(Stage stage) {
+        try {
+            Image appIcon = new Image(getClass().getResourceAsStream("/com/gestorelibreria/icons/icona.png"));
+            stage.getIcons().add(appIcon);
+        } catch (Exception e) {
+            System.err.println("Errore nel caricamento dell'icona per il dialog: " + e.getMessage());
+        }
+    }
+
     /**
      * Metodo speciale di JavaFX, chiamato automaticamente dopo che l'FXML è stato
      * caricato.
@@ -65,7 +77,7 @@ public class MainView implements Observer {
         // Imposta dei valori di default
         filtroTipoComboBox.setValue("TITOLO");
         ordinamentoTipoComboBox.setValue("NESSUNO");
-    
+
         // Gestione della visibilità del campo di filtro in base al tipo selezionato
         filtroTipoComboBox.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
             if ("STATO LETTURA".equals(newValue)) {
@@ -82,7 +94,6 @@ public class MainView implements Observer {
         });
     }
 
-    // --- METODI CHIAMATI DAL CONTROLLER ---
 
     @Override
     public void update() {
@@ -131,6 +142,8 @@ public class MainView implements Observer {
             dialogStage.setTitle("Modifica Libro");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             Scene scene = new Scene(page);
+            setIconaStage(dialogStage);
+
             dialogStage.setScene(scene);
 
             ModificaLibroDialogController dialogController = loader.getController();
@@ -155,17 +168,21 @@ public class MainView implements Observer {
         alert.setTitle("Conferma Rimozione");
         alert.setHeaderText("Sei sicuro di voler rimuovere il libro?");
         alert.setContentText("Libro: " + libro.titolo());
-
+        setIconaStage((Stage) alert.getDialogPane().getScene().getWindow());
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
     public void mostraMessaggio(String messaggio) {
-        new Alert(Alert.AlertType.INFORMATION, messaggio).showAndWait();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, messaggio);
+        setIconaStage((Stage) alert.getDialogPane().getScene().getWindow());
+        alert.showAndWait();
     }
 
     public void mostraErrore(String errore) {
-        new Alert(Alert.AlertType.ERROR, errore).showAndWait();
+        Alert alert = new Alert(Alert.AlertType.ERROR, errore);
+        setIconaStage((Stage) alert.getDialogPane().getScene().getWindow());
+        alert.showAndWait();
     }
 
     // --- GESTORI DI EVENTI FXML ---
@@ -181,7 +198,6 @@ public class MainView implements Observer {
         } else {
             valoreFiltro = filtroValoreField.getText();
         }
-       
 
         // Crea il DTO e lo passa al controller
         RichiestaDTO richiesta = new RichiestaDTO(tipoFiltro, valoreFiltro, tipoOrdinamento);
@@ -202,6 +218,7 @@ public class MainView implements Observer {
             // dialogStage.initOwner(bookContainer.getScene().getWindow()); // Opzionale:
             // imposta il proprietario
             Scene scene = new Scene(page);
+            setIconaStage(dialogStage);
             dialogStage.setScene(scene);
 
             // Ottieni il controller del dialog e passagli lo Stage
@@ -226,5 +243,43 @@ public class MainView implements Observer {
     @FXML
     private void onSalvaClicked() {
         controller.gestisciSalva();
+    }
+
+    @FXML
+    private void onImportaClicked() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Importa Libreria");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File JSON", "*.json"));
+
+        File file = fileChooser.showOpenDialog(bookContainer.getScene().getWindow());
+        if (file != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Conferma Importazione");
+            alert.setHeaderText("L'importazione sostituirà la libreria corrente.");
+            alert.setContentText("Tutte le modifiche non salvate andranno perse. Sei sicuro di voler continuare?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                controller.gestisciImporta(file.getAbsolutePath());
+            }
+        }
+    }
+
+    @FXML
+    private void onEsportaClicked() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Esporta Libreria");
+        fileChooser.setInitialFileName("libreria.json");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("File JSON", "*.json"));
+
+        File file = fileChooser.showSaveDialog(bookContainer.getScene().getWindow());
+        if (file != null) {
+            controller.gestisciEsporta(file.getAbsolutePath());
+        }
+    }
+
+    @FXML
+    private void onEsciClicked() {
+        controller.gestisciEsci();
     }
 }
