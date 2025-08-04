@@ -117,7 +117,7 @@ public class MainView implements Observer {
     private void onAggiungiClicked() {
         try {
             // 1. Carica il file FXML del dialog
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddBookDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AggiungiLibroDialog.fxml"));
             GridPane page = loader.load();
 
             // 2. Crea una nuova finestra (Stage) per il dialog
@@ -129,7 +129,7 @@ public class MainView implements Observer {
             dialogStage.setScene(scene);
 
             // 3. Ottieni il controller del dialog e passagli lo Stage
-            AddBookDialogController controller = loader.getController();
+            AggiungiLibroDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
 
             // 4. Mostra il dialog e attendi che venga chiuso

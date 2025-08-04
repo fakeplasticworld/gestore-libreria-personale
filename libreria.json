@@ -126,5 +126,13 @@
     "isbn": "9788804753308",
     "valutazione": 5,
     "statoLettura": "IN_LETTURA"
+  },
+  {
+    "titolo": "Finestra sul nulla",
+    "autore": "Emil M. Cioran",
+    "genere": "Saggistica",
+    "isbn": "9788845936999",
+    "valutazione": 4,
+    "statoLettura": "DA_LEGGERE"
   }
 ]
