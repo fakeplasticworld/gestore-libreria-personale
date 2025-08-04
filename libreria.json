@@ -120,19 +120,11 @@
     "statoLettura": "IN_LETTURA"
   },
   {
-    "titolo": "Guida galattica per gli autostoppisti",
-    "autore": "Douglas Adams",
-    "genere": "Umorismo Fantascientifico",
-    "isbn": "9788804753308",
-    "valutazione": 5,
-    "statoLettura": "IN_LETTURA"
-  },
-  {
     "titolo": "Finestra sul nulla",
     "autore": "Emil M. Cioran",
-    "genere": "Saggistica",
+    "genere": "Saggisticca",
     "isbn": "9788845936999",
     "valutazione": 4,
-    "statoLettura": "DA_LEGGERE"
+    "statoLettura": "IN_LETTURA"
   }
 ]

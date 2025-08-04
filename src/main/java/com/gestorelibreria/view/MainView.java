@@ -7,6 +7,7 @@ import com.gestorelibreria.controller.MainController;
 import com.gestorelibreria.controller.dto.LibroDTO;
 import com.gestorelibreria.controller.dto.RichiestaDTO;
 import com.gestorelibreria.model.Libro;
+import com.gestorelibreria.model.StatoLettura;
 import com.gestorelibreria.model.observer.Observer;
 
 import javafx.fxml.FXML;
@@ -31,6 +32,8 @@ public class MainView implements Observer {
     @FXML
     private TextField filtroValoreField;
     @FXML
+    private ComboBox<StatoLettura> filtroStatoLetturaComboBox;
+    @FXML
     private ComboBox<String> ordinamentoTipoComboBox;
 
     private MainController controller;
@@ -40,17 +43,37 @@ public class MainView implements Observer {
     }
 
     /**
-     * Metodo speciale di JavaFX, chiamato automaticamente dopo che l'FXML è stato caricato.
+     * Metodo speciale di JavaFX, chiamato automaticamente dopo che l'FXML è stato
+     * caricato.
      */
     @FXML
     public void initialize() {
         // Popola i ComboBox con le opzioni di filtro e ordinamento
-        filtroTipoComboBox.getItems().addAll("TITOLO", "AUTORE", "GENERE");
+        filtroTipoComboBox.getItems().addAll("TITOLO", "AUTORE", "GENERE", "STATO LETTURA");
         ordinamentoTipoComboBox.getItems().addAll("NESSUNO", "TITOLO", "VALUTAZIONE");
-        
+
+        // Popola il ComboBox per lo stato di lettura
+        filtroStatoLetturaComboBox.getItems().setAll(StatoLettura.values());
+        filtroStatoLetturaComboBox.setValue(StatoLettura.DA_LEGGERE);
+
         // Imposta dei valori di default
         filtroTipoComboBox.setValue("TITOLO");
         ordinamentoTipoComboBox.setValue("NESSUNO");
+    
+        // Gestione della visibilità del campo di filtro in base al tipo selezionato
+        filtroTipoComboBox.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
+            if ("STATO LETTURA".equals(newValue)) {
+                filtroValoreField.setVisible(false);
+                filtroValoreField.setManaged(false);
+                filtroStatoLetturaComboBox.setVisible(true);
+                filtroStatoLetturaComboBox.setManaged(true);
+            } else {
+                filtroStatoLetturaComboBox.setVisible(false);
+                filtroStatoLetturaComboBox.setManaged(false);
+                filtroValoreField.setVisible(true);
+                filtroValoreField.setManaged(true);
+            }
+        });
     }
 
     // --- METODI CHIAMATI DAL CONTROLLER ---
@@ -58,12 +81,14 @@ public class MainView implements Observer {
     @Override
     public void update() {
         System.out.println("View: Ricevuto update dal Model. Ricarico i dati...");
-        // Quando il Model notifica un cambiamento, riesegue l'ultima ricerca o una ricerca di default
-        onFiltraClicked(); 
+        // Quando il Model notifica un cambiamento, riesegue l'ultima ricerca o una
+        // ricerca di default
+        onFiltraClicked();
     }
 
     /**
      * Popola la griglia con le "card" dei libri ricevuti.
+     * 
      * @param risultati Un iteratore sui libri da mostrare.
      */
     public void mostraRisultati(Iterator<Libro> risultati) {
@@ -86,7 +111,6 @@ public class MainView implements Observer {
 
             } catch (IOException e) {
                 System.err.println("Errore durante il caricamento di BookCard.fxml");
-                e.printStackTrace();
             }
         });
         System.out.println("View: Griglia aggiornata.");
@@ -99,55 +123,62 @@ public class MainView implements Observer {
     public void mostraErrore(String errore) {
         new Alert(Alert.AlertType.ERROR, errore).showAndWait();
     }
-    
+
     // --- GESTORI DI EVENTI FXML ---
-    
+
     @FXML
     private void onFiltraClicked() {
         String tipoFiltro = filtroTipoComboBox.getValue();
-        String valoreFiltro = filtroValoreField.getText();
+        String valoreFiltro;
         String tipoOrdinamento = ordinamentoTipoComboBox.getValue();
+
+        if ("STATO LETTURA".equals(tipoFiltro)) {
+            valoreFiltro = filtroStatoLetturaComboBox.getValue().name();
+        } else {
+            valoreFiltro = filtroValoreField.getText();
+        }
+       
 
         // Crea il DTO e lo passa al controller
         RichiestaDTO richiesta = new RichiestaDTO(tipoFiltro, valoreFiltro, tipoOrdinamento);
         controller.gestisciRichiesta(richiesta);
     }
-    
+
     @FXML
     private void onAggiungiClicked() {
         try {
-            // 1. Carica il file FXML del dialog
+            // Carica il file FXML del dialog
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AggiungiLibroDialog.fxml"));
             GridPane page = loader.load();
 
-            // 2. Crea una nuova finestra (Stage) per il dialog
+            // Crea una nuova finestra (Stage) per il dialog
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Aggiungi Nuovo Libro");
             dialogStage.initModality(Modality.WINDOW_MODAL); // Blocca la finestra principale
-            // dialogStage.initOwner(bookContainer.getScene().getWindow()); // Opzionale: imposta il proprietario
+            // dialogStage.initOwner(bookContainer.getScene().getWindow()); // Opzionale:
+            // imposta il proprietario
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // 3. Ottieni il controller del dialog e passagli lo Stage
-            AggiungiLibroDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
+            // Ottieni il controller del dialog e passagli lo Stage
+            AggiungiLibroDialogController dialogController = loader.getController();
+            dialogController.setDialogStage(dialogStage);
 
-            // 4. Mostra il dialog e attendi che venga chiuso
+            // Mostra il dialog e attendi che venga chiuso
             dialogStage.showAndWait();
 
-            // 5. Se l'utente ha cliccato "Aggiungi", passa il DTO al controller principale
-            if (controller.isOkClicked()) {
-                LibroDTO nuovoLibro = controller.getLibroDTO();
+            // Se l'utente ha cliccato "Aggiungi", passa il DTO al controller principale
+            if (dialogController.isOkClicked()) {
+                LibroDTO nuovoLibro = dialogController.getLibroDTO();
                 this.controller.gestisciAggiungiLibro(nuovoLibro);
             }
 
         } catch (IOException e) {
             System.err.println("Errore durante l'apertura del dialog di aggiunta libro.");
-            e.printStackTrace();
             mostraErrore("Impossibile aprire la finestra per aggiungere il libro.");
         }
     }
-    
+
     @FXML
     private void onSalvaClicked() {
         controller.gestisciSalva();

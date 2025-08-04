@@ -21,6 +21,6 @@ public class RicercaPerTitolo implements CriterioDiFiltro {
     @Override
     public boolean isMatch(Libro libro) {
         // Controlla se il titolo del libro contiene il testo cercato (non case-sensitive)
-        return libro.getTitolo().toLowerCase().contains(this.titolo);
+        return libro.getTitolo().toLowerCase().contains(this.titolo.toLowerCase());
     }
 }

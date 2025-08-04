@@ -20,6 +20,6 @@ public class FiltraPerGenere implements CriterioDiFiltro {
      */
     @Override
     public boolean isMatch(Libro libro) {
-        return libro.getGenere().equalsIgnoreCase(this.genere);
+        return libro.getGenere().toLowerCase().contains(genere.toLowerCase());
     }
 }

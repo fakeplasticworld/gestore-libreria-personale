@@ -55,10 +55,8 @@ public class App extends Application {
 
         } catch (IOException e) {
             System.err.println("Errore durante l'avvio dell'applicazione: impossibile caricare MainView.fxml");
-            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Si è verificato un errore imprevisto durante l'avvio.");
-            e.printStackTrace();
         }
     }
 

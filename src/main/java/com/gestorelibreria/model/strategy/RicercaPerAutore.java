@@ -21,6 +21,6 @@ public class RicercaPerAutore implements CriterioDiFiltro {
     @Override
     public boolean isMatch(Libro libro) {
         // Controlla se l'autore del libro contiene il testo cercato (non case-sensitive)
-        return libro.getAutore().toLowerCase().contains(this.autore);
+        return libro.getAutore().toLowerCase().contains(this.autore.toLowerCase());
     }
 }

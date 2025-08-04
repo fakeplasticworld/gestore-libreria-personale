@@ -11,7 +11,7 @@
    <children>
       <VBox alignment="CENTER" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="314.0" prefWidth="179.0">
          <children>
-            <ImageView fitHeight="235.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="copertina" fitHeight="235.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -35,6 +35,6 @@
          </padding>
       </VBox>
       <Label fx:id="valutazione" text="Label" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <Label fx:id="statoLetturaLabel" text="Da Leggere" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Label fx:id="statoLettura" text="Da Leggere" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>

@@ -14,6 +14,7 @@ import com.gestorelibreria.model.Libro;
 import com.gestorelibreria.model.strategy.CriterioDiFiltro;
 import com.gestorelibreria.model.strategy.CriterioDiOrdinamento;
 import com.gestorelibreria.model.strategy.FiltraPerGenere;
+import com.gestorelibreria.model.strategy.FiltraPerStatoLettura;
 import com.gestorelibreria.model.strategy.FiltraPerValutazione;
 import com.gestorelibreria.model.strategy.FiltroUniversale;
 import com.gestorelibreria.model.strategy.NessunOrdinamento;
@@ -117,6 +118,7 @@ public class MainController {
                 case "AUTORE" -> new RicercaPerAutore(dto.valoreFiltro());
                 case "TITOLO" -> new RicercaPerTitolo(dto.valoreFiltro());
                 case "GENERE" -> new FiltraPerGenere(dto.valoreFiltro());
+                case "STATO LETTURA" -> new FiltraPerStatoLettura(dto.valoreFiltro());
                 case "VALUTAZIONE" -> new FiltraPerValutazione(Integer.parseInt(dto.valoreFiltro()));
                 default -> new FiltroUniversale();
             };

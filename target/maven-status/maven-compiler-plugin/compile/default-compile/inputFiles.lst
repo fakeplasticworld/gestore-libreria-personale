@@ -10,13 +10,13 @@ C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelib
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\strategy\CriterioDiOrdinamento.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\App.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\controller\command\Command.java
-C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\view\AddBookDialogController.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\controller\command\ModificaLibroCommand.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\strategy\OrdinaPerValutazione.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\strategy\FiltroUniversale.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\strategy\NessunOrdinamento.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\Libreria.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\strategy\FiltraPerValutazione.java
+C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\view\AggiungiLibroDialogController.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\strategy\RicercaPerTitolo.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\controller\command\AggiungiLibroCommand.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\controller\dto\LibroDTO.java
@@ -26,4 +26,6 @@ C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelib
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\controller\command\RimuoviLibroCommand.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\strategy\CriterioDiFiltro.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\controller\dto\RichiestaDTO.java
+C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\strategy\FiltraPerStatoLettura.java
 C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\model\iterator\LibriIterator.java
+C:\Users\roman\.projects\gestore-libreria-personale\src\main\java\com\gestorelibreria\view\ModificaLibroDialogController.java
