@@ -104,11 +104,19 @@
     "statoLettura": "LETTO"
   },
   {
+    "titolo": "Sillogismi dell\u0027amarezza",
+    "autore": "Emil M.Cioran",
+    "genere": "Saggistica",
+    "isbn": "9788845909764",
+    "valutazione": 4,
+    "statoLettura": "LETTO"
+  },
+  {
     "titolo": "Le cronache del crepuscolo",
     "autore": "Marco Rossi",
     "genere": "Fantasy",
     "isbn": "9788804759331",
-    "valutazione": -1,
-    "statoLettura": "IN_LETTURA"
+    "valutazione": 4,
+    "statoLettura": "LETTO"
   }
 ]

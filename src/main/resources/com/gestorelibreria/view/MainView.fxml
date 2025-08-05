@@ -56,7 +56,7 @@
 
             <StackPane>
                <children>
-                  <TextField fx:id="filtroValoreField" promptText="Valore da cercare" />
+                  <TextField fx:id="filtroValoreField" promptText="Valore da cercare" onAction="#onFiltraClicked"/>
                   <ComboBox fx:id="filtroStatoLetturaComboBox" managed="false" prefWidth="180.0"
                      visible="false" />
                </children>
