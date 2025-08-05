@@ -45,7 +45,6 @@ public class MainController {
     private void eseguiComandoEsalva(Command comando) {
         comando.execute();
         gestorePersistenza.salva(this.libreria);
-        System.out.println("Salvataggio automatico eseguito."); // Log per debug
     }
 
     /**
@@ -54,7 +53,6 @@ public class MainController {
      * @param dto Il DTO contenente i dati del libro da aggiungere.
      */
     public void gestisciAggiungiLibro(LibroDTO dto) {
-        // 1. Converte il DTO in un oggetto di dominio
         Libro nuovoLibro = new Libro.Builder(dto.titolo(), dto.autore())
                 .conIsbn(dto.isbn())
                 .conGenere(dto.genere())
@@ -62,10 +60,8 @@ public class MainController {
                 .conStatoLettura(dto.statoLettura())
                 .build();
 
-        // 2. Crea ed esegue il comando
         Command comando = new AggiungiLibroCommand(libreria, nuovoLibro);
         eseguiComandoEsalva(comando);
-        // 3. Notifica la vista
         view.mostraMessaggio("Libro aggiunto con successo: " + nuovoLibro.getTitolo());
     }
 
@@ -86,8 +82,13 @@ public class MainController {
         }
     }
 
+    /**
+     * Gestisce la modifica di un libro.
+     * 
+     * @param nuovoLibroDTO Il DTO contenente i nuovi dati del libro.
+     * @param libroDaModificareDTO Il DTO del libro da modificare.
+     */
     public void gestisciModificaLibro(LibroDTO nuovoLibroDTO, LibroDTO libroDaModificareDTO) {
-        // 1. Trova il libro da modificare
         Libro libroDaModificare = libreria.trovaLibro(libroDaModificareDTO.isbn());
         if (libroDaModificare != null) {
             Libro libroAggiornato = new Libro.Builder(nuovoLibroDTO.titolo(), nuovoLibroDTO.autore())
@@ -138,6 +139,9 @@ public class MainController {
         view.mostraRisultati(risultati);
     }
 
+    /**
+     * Gestisce il caricamento della libreria.
+     */
     public void gestisciCarica() {
         List<Libro> libriCaricati = gestorePersistenza.carica();
         libreria.sostituisciCollezione(libriCaricati);
@@ -145,6 +149,11 @@ public class MainController {
         view.mostraMessaggio("Libreria caricata con successo.");
     }
 
+    /**
+     * Gestisce l'importazione della libreria.
+     * 
+     * @param percorso Il percorso del file da importare.
+     */
     public void gestisciImporta(String percorso) {
         List<Libro> libriImportati = gestorePersistenza.importa(percorso);
         if (libriImportati != null && !libriImportati.isEmpty()) {
@@ -155,16 +164,27 @@ public class MainController {
         }
     }
 
+    /**
+     * Gestisce l'esportazione della libreria.
+     * 
+     * @param percorso Il percorso del file da esportare.
+     */
     public void gestisciEsporta(String percorso) {
         gestorePersistenza.esporta(libreria, percorso);
         view.mostraMessaggio("Libreria esportata con successo in: " + percorso);
     }
 
+    /**
+     * Gestisce il salvataggio della libreria.
+     */
     public void gestisciSalva() {
         gestorePersistenza.salva(libreria);
         view.mostraMessaggio("Libreria salvata con successo.");
     }
 
+    /**
+     * Gestisce l'uscita dal programma, salvando la libreria.
+     */
     public void gestisciEsci() {
         gestorePersistenza.salva(libreria);
         view.mostraMessaggio("Uscita dal programma. Libreria salvata.");

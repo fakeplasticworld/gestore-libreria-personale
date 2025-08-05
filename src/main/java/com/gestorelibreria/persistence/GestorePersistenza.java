@@ -24,8 +24,6 @@ public class GestorePersistenza {
     private final Gson gson;
 
     public GestorePersistenza() {
-        // Inizializza Gson con l'opzione "pretty printing" per rendere il JSON
-        // leggibile
         this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
@@ -54,7 +52,6 @@ public class GestorePersistenza {
      * @return L'istanza della libreria caricata, o una nuova istanza se il file non
      *         esiste.
      */
-    // Dentro la classe GestorePersistenza
     public List<Libro> carica() {
         try (FileReader reader = new FileReader(DEFAULT_FILENAME)) {
             Type tipoListaLibri = new TypeToken<ArrayList<Libro>>() {
@@ -62,7 +59,6 @@ public class GestorePersistenza {
             List<Libro> libriCaricati = gson.fromJson(reader, tipoListaLibri);
             return libriCaricati != null ? libriCaricati : new ArrayList<>();
         } catch (IOException e) {
-            System.out.println("Nessun file di salvataggio trovato.");
             return new ArrayList<>();
         }
     }

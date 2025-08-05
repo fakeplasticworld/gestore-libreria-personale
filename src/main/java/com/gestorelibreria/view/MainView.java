@@ -30,9 +30,8 @@ import javafx.stage.Window;
 
 public class MainView implements Observer {
 
-    // --- RIFERIMENTI AI COMPONENTI FXML ---
     @FXML
-    private TilePane bookContainer; // Il contenitore a griglia per le "card" dei libri
+    private TilePane bookContainer;
     @FXML
     private ComboBox<String> filtroTipoComboBox;
     @FXML
@@ -52,6 +51,11 @@ public class MainView implements Observer {
         return controller;
     }
 
+    /**
+     * Imposta l'icona per il dialogo.
+     * 
+     * @param stage Lo stage del dialogo.
+     */
     private void setIconaStage(Stage stage) {
         try {
             Image appIcon = new Image(getClass().getResourceAsStream("/com/gestorelibreria/icons/icona.png"));
@@ -62,44 +66,39 @@ public class MainView implements Observer {
     }
 
     /**
-     * Metodo speciale di JavaFX, chiamato automaticamente dopo che l'FXML è stato
-     * caricato.
+     * Inizializza la vista principale.
+     * Popola i ComboBox e imposta i listener per le azioni dell'utente.
      */
-    @FXML
+  @FXML
     public void initialize() {
-        // Popola i ComboBox con le opzioni di filtro e ordinamento
-        filtroTipoComboBox.getItems().addAll("TITOLO", "AUTORE", "GENERE", "STATO LETTURA");
+        filtroTipoComboBox.getItems().addAll("NESSUNO", "TITOLO", "AUTORE", "GENERE", "STATO LETTURA");
         ordinamentoTipoComboBox.getItems().addAll("NESSUNO", "TITOLO", "VALUTAZIONE");
 
-        // Popola il ComboBox per lo stato di lettura
         filtroStatoLetturaComboBox.getItems().setAll(StatoLettura.values());
         filtroStatoLetturaComboBox.setValue(StatoLettura.DA_LEGGERE);
 
-        // Imposta dei valori di default
-        filtroTipoComboBox.setValue("TITOLO");
+        filtroTipoComboBox.setValue("NESSUNO");
         ordinamentoTipoComboBox.setValue("NESSUNO");
+        filtroValoreField.setVisible(false);
+        filtroValoreField.setManaged(false);
+        filtroStatoLetturaComboBox.setVisible(false);
+        filtroStatoLetturaComboBox.setManaged(false);
 
-        // Gestione della visibilità del campo di filtro in base al tipo selezionato
         filtroTipoComboBox.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
-            if ("STATO LETTURA".equals(newValue)) {
-                filtroValoreField.setVisible(false);
-                filtroValoreField.setManaged(false);
-                filtroStatoLetturaComboBox.setVisible(true);
-                filtroStatoLetturaComboBox.setManaged(true);
-            } else {
-                filtroStatoLetturaComboBox.setVisible(false);
-                filtroStatoLetturaComboBox.setManaged(false);
-                filtroValoreField.setVisible(true);
-                filtroValoreField.setManaged(true);
-            }
+            boolean isStatoLettura = "STATO LETTURA".equals(newValue);
+            boolean isNessuno = "NESSUNO".equals(newValue);
+
+            filtroStatoLetturaComboBox.setVisible(isStatoLettura);
+            filtroStatoLetturaComboBox.setManaged(isStatoLettura);
+
+            filtroValoreField.setVisible(!isStatoLettura && !isNessuno);
+            filtroValoreField.setManaged(!isStatoLettura && !isNessuno);
         });
     }
 
+
     @Override
     public void update() {
-        System.out.println("View: Ricevuto update dal Model. Ricarico i dati...");
-        // Quando il Model notifica un cambiamento, riesegue l'ultima ricerca o una
-        // ricerca di default
         onFiltraClicked();
     }
 
@@ -109,30 +108,32 @@ public class MainView implements Observer {
      * @param risultati Un iteratore sui libri da mostrare.
      */
     public void mostraRisultati(Iterator<Libro> risultati) {
-        // Pulisci la vista precedente
         bookContainer.getChildren().clear();
 
-        // Itera sui risultati e crea una "card" per ogni libro
         risultati.forEachRemaining(libro -> {
             try {
-                // Carica il file FXML della singola card
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("BookCard.fxml"));
                 Parent bookCardNode = loader.load();
 
-                // Ottieni il controller della card e passagli i dati del libro
                 BookCardController cardController = loader.getController();
                 cardController.setData(libro, this);
 
-                // Aggiungi la card al contenitore a griglia
                 bookContainer.getChildren().add(bookCardNode);
 
             } catch (IOException e) {
                 System.err.println("Errore durante il caricamento di BookCard.fxml");
             }
         });
-        System.out.println("View: Griglia aggiornata.");
+        if (bookContainer.getChildren().isEmpty()) {
+            mostraMessaggio("Nessun libro trovato");
+        }
     }
 
+    /**
+     * Mostra un dialog per modificare un libro esistente.
+     * 
+     * @param libroDTO Il DTO del libro da modificare.
+     */
     public void mostraModificaDialog(LibroDTO libroDTO) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificaLibroDialog.fxml"));
@@ -166,6 +167,12 @@ public class MainView implements Observer {
         }
     }
 
+    /**
+     * Mostra un dialog di conferma per la rimozione di un libro.
+     * 
+     * @param libro Il libro da rimuovere.
+     * @return true se l'utente conferma la rimozione, false altrimenti.
+     */
     public boolean mostraConfermaRimozione(LibroDTO libro) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Conferma Rimozione");
@@ -176,20 +183,31 @@ public class MainView implements Observer {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
+    /**
+     * Mostra un messaggio informativo all'utente.
+     * 
+     * @param messaggio Il messaggio da mostrare.
+     */
     public void mostraMessaggio(String messaggio) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, messaggio);
         setIconaStage((Stage) alert.getDialogPane().getScene().getWindow());
         alert.showAndWait();
     }
 
+    /**
+     * Mostra un messaggio di errore all'utente.
+     * 
+     * @param errore Il messaggio di errore da mostrare.
+     */
     public void mostraErrore(String errore) {
         Alert alert = new Alert(Alert.AlertType.ERROR, errore);
         setIconaStage((Stage) alert.getDialogPane().getScene().getWindow());
         alert.showAndWait();
     }
 
-    // --- GESTORI DI EVENTI FXML ---
-
+    /**
+     * Gestisce il click sul pulsante di filtro.
+     */
     @FXML
     private void onFiltraClicked() {
         String tipoFiltro = filtroTipoComboBox.getValue();
@@ -202,19 +220,20 @@ public class MainView implements Observer {
             valoreFiltro = filtroValoreField.getText();
         }
 
-        // Crea il DTO e lo passa al controller
         RichiestaDTO richiesta = new RichiestaDTO(tipoFiltro, valoreFiltro, tipoOrdinamento);
         controller.gestisciRichiesta(richiesta);
     }
 
+    /**
+     * Gestisce il click sul pulsante di aggiunta di un nuovo libro.
+     * Apre un dialog per inserire i dettagli del libro da aggiungere.
+     */
     @FXML
     private void onAggiungiClicked() {
         try {
-            // Carica il file FXML del dialog
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AggiungiLibroDialog.fxml"));
             GridPane page = loader.load();
 
-            // Crea una nuova finestra (Stage) per il dialog
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Aggiungi Nuovo Libro");
             dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -222,19 +241,14 @@ public class MainView implements Observer {
             dialogStage.setResizable(false);
             Window owner = bookContainer.getScene().getWindow();
             dialogStage.initOwner(owner);
-            // Crea la scena e imposta l'icona
             Scene scene = new Scene(page);
             setIconaStage(dialogStage);
             dialogStage.setScene(scene);
 
-            // Ottieni il controller del dialog e passagli lo Stage
             AggiungiLibroDialogController dialogController = loader.getController();
             dialogController.setDialogStage(dialogStage);
-
-            // Mostra il dialog e attendi che venga chiuso
             dialogStage.showAndWait();
 
-            // Se l'utente ha cliccato "Aggiungi", passa il DTO al controller principale
             if (dialogController.isOkClicked()) {
                 LibroDTO nuovoLibro = dialogController.getLibroDTO();
                 this.controller.gestisciAggiungiLibro(nuovoLibro);
@@ -243,15 +257,20 @@ public class MainView implements Observer {
         } catch (IOException e) {
             System.err.println("Errore durante l'apertura del dialog di aggiunta libro.");
             mostraErrore("Impossibile aprire la finestra per aggiungere il libro.");
-            e.printStackTrace();
         }
     }
 
+    /**
+     * Gestisce il click sul pulsante di salvataggio.
+     */
     @FXML
     private void onSalvaClicked() {
         controller.gestisciSalva();
     }
 
+    /**
+     * Gestisce il click sul pulsante di importazione.
+     */
     @FXML
     private void onImportaClicked() {
         FileChooser fileChooser = new FileChooser();
@@ -272,6 +291,10 @@ public class MainView implements Observer {
         }
     }
 
+    /**
+     * Gestisce il click sul pulsante di esportazione.
+     * Permette di salvare la libreria in un file JSON.
+     */
     @FXML
     private void onEsportaClicked() {
         FileChooser fileChooser = new FileChooser();
@@ -285,6 +308,7 @@ public class MainView implements Observer {
         }
     }
 
+    
     @FXML
     private void onEsciClicked() {
         controller.gestisciEsci();

@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -25,38 +26,42 @@ public class BookCardController {
     @FXML
     private Label autore;
     @FXML
-    private Label valutazione;
-    @FXML
     private ImageView statoLettura;
+    @FXML
+    private HBox valutazione;
 
     private Libro libro;
     private MainView mainView;
 
-    private static final List<Color> PASTEL_COLORS = Arrays.asList(
-            Color.web("#ffadad"), // Rosso Pastello
-            Color.web("#ffd6a5"), // Arancione Pastello
-            Color.web("#fdffb6"), // Giallo Pastello
-            Color.web("#caffbf"), // Verde Pastello
-            Color.web("#9bf6ff"), // Ciano Pastello
-            Color.web("#a0c4ff"), // Blu Pastello
-            Color.web("#bdb2ff"), // Viola Pastello
-            Color.web("#ffc6ff"), // Magenta Pastello
-            Color.web("#e6e6e6"), // Grigio Chiaro
-            Color.web("#d4a373")  // Marroncino Sobrio
-    );
+    /**
+     * Colori pastello per le card dei libri.
+     * Questi colori sono scelti in modo da essere facilmente distinguibili
+     */
+    private static final List<Color> COLORI = Arrays.asList(
+            Color.web("#d4a373"),
+            Color.web("#a98467"),
+            Color.web("#b19d90ff"),
+            Color.web("#adc178"),
+            Color.web("#dde5b6"),
+            Color.web("#a9b388"),
+            Color.web("#83b182ff"),
+            Color.web("#83c5be"),
+            Color.web("#a2d2ff"),
+            Color.web("#bde0fe"));
 
-    // Metodo per popolare la card con i dati di un libro
+    /**
+     * Imposta i dati del libro e aggiorna la visualizzazione della card.
+     *
+     * @param libro    Il libro da visualizzare nella card.
+     * @param mainView La vista principale per interazioni future.
+     */
     public void setData(Libro libro, MainView mainView) {
         this.libro = libro;
         this.mainView = mainView;
         titolo.setText(libro.getTitolo());
         autore.setText(libro.getAutore());
-        if (libro.getValutazione() >= 0) {
-            valutazione.setText(libro.getValutazione() + "/5");
-            valutazione.setVisible(true);
-        } else {
-            valutazione.setVisible(false);
-        }
+        impostaStelleValutazione(libro.getValutazione());
+
         try {
             String iconPath = libro.getStatoLettura().getIconPath();
             Image icon = new Image(getClass().getResourceAsStream(iconPath));
@@ -64,86 +69,96 @@ public class BookCardController {
         } catch (Exception e) {
             System.err.println("Errore nel caricamento dell'icona: " + e.getMessage());
         }
+
+        // Crea un canvas per disegnare la copertina del libro
         int width = 150;
         int height = 230;
-
-        // Crea un canvas su cui disegnare
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        // Genera un colore di sfondo casuale
-        int colorIndex = Math.abs(libro.getTitolo().hashCode()) % PASTEL_COLORS.size();
-        Color deterministicColor = PASTEL_COLORS.get(colorIndex);
-        
-        // Imposta il colore di sfondo
+        int colorIndex = Math.abs(libro.getTitolo().hashCode()) % COLORI.size();
+        Color deterministicColor = COLORI.get(colorIndex);
         gc.setFill(deterministicColor);
         gc.fillRect(0, 0, width, height);
-
-        // Imposta il colore del testo
         gc.setFill(Color.BLACK);
-
-        // Impostazioni del font e allineamento del testo
         gc.setFont(new Font("System Bold", 18));
         gc.setTextAlign(TextAlignment.CENTER);
-
-        drawTextWithLineBreaks(gc, libro.getTitolo(), width / 2.0, 50, width - 20);
-
-        // Crea un'immagine dal canvas
+        gestisciTestoACapo(gc, libro.getTitolo(), width / 2.0, 50, width - 20);
         WritableImage writableImage = new WritableImage(width, height);
         canvas.snapshot(null, writableImage);
-
-        // Imposta l'immagine generata sulla ImageView della copertina
         copertina.setImage(writableImage);
     }
 
+    /**
+     * Gestisce il click sul titolo del libro.
+     * Mostra i dettagli del libro nella vista principale.
+     */
     @FXML
     private void onModificaClicked() {
         LibroDTO dto = new LibroDTO(
-            libro.getTitolo(), libro.getAutore(), libro.getIsbn(),
-            libro.getGenere(), libro.getValutazione(), libro.getStatoLettura()
-        );
+                libro.getTitolo(), libro.getAutore(), libro.getIsbn(),
+                libro.getGenere(), libro.getValutazione(), libro.getStatoLettura());
         mainView.mostraModificaDialog(dto);
     }
 
+    /**
+     * Gestisce il click sull'immagine della copertina del libro.
+     * Mostra i dettagli del libro nella vista principale.
+     */
     @FXML
     private void onRimuoviClicked() {
         LibroDTO dto = new LibroDTO(
-            libro.getTitolo(), libro.getAutore(), libro.getIsbn(),
-            libro.getGenere(), libro.getValutazione(), libro.getStatoLettura()
-        );
+                libro.getTitolo(), libro.getAutore(), libro.getIsbn(),
+                libro.getGenere(), libro.getValutazione(), libro.getStatoLettura());
         if (mainView.mostraConfermaRimozione(dto)) {
             mainView.getController().gestisciRimuoviLibro(dto);
             mainView.mostraMessaggio("Libro rimosso con successo.");
         }
     }
 
-     /**
+    /**
      * Disegna il testo su più righe se non entra nella larghezza massima.
-     * @param gc il GraphicsContext su cui disegnare
-     * @param text il testo da disegnare
-     * @param x la coordinata x del centro del testo
-     * @param y la coordinata y della prima riga
+     * 
+     * @param gc       il GraphicsContext su cui disegnare
+     * @param testo    il testo da disegnare
+     * @param x        la coordinata x del centro del testo
+     * @param y        la coordinata y della prima riga
      * @param maxWidth la larghezza massima permessa per una riga
      */
-    private void drawTextWithLineBreaks(GraphicsContext gc, String text, double x, double y, double maxWidth) {
-        String[] words = text.split(" ");
-        StringBuilder currentLine = new StringBuilder(words[0]);
-        double lineHeight = gc.getFont().getSize(); // Ottiene l'altezza della riga basata sulla dimensione del font
+    private void gestisciTestoACapo(GraphicsContext gc, String testo, double x, double y, double maxWidth) {
+        String[] parole = testo.split(" ");
+        StringBuilder riga = new StringBuilder(parole[0]);
+        double altezza = gc.getFont().getSize();
 
-        for (int i = 1; i < words.length; i++) {
-            // Se aggiungere la prossima parola supera la larghezza massima...
-            if (gc.getFont().getSize() * (currentLine.length() + words[i].length()) > maxWidth * 1.5) { // Moltiplicatore per approssimare la larghezza
-                // ...disegna la riga corrente e vai a capo.
-                gc.fillText(currentLine.toString(), x, y);
-                y += lineHeight;
-                currentLine = new StringBuilder(words[i]);
+        for (int i = 1; i < parole.length; i++) {
+            if (gc.getFont().getSize() * (riga.length() + parole[i].length()) > maxWidth * 1.5) {
+                gc.fillText(riga.toString(), x, y);
+                y += altezza;
+                riga = new StringBuilder(parole[i]);
             } else {
-                // ...altrimenti, aggiungi la parola alla riga corrente.
-                currentLine.append(" ").append(words[i]);
+                riga.append(" ").append(parole[i]);
             }
         }
-        // Disegna l'ultima riga rimasta
-        gc.fillText(currentLine.toString(), x, y);
+        gc.fillText(riga.toString(), x, y);
+    }
+
+    /**
+     * Pulisce e popola il contenitore della valutazione con le stelle.
+     * 
+     * @param valutazione Il punteggio da 1 a 5, o -1 se non presente.
+     */
+    private void impostaStelleValutazione(int val) {
+        valutazione.getChildren().clear();
+
+        if (val > 0) {
+            valutazione.setVisible(true);
+            for (int i = 1; i <= 5; i++) {
+                Label stella = new Label(i <= val ? "★" : "☆");
+                stella.setStyle("-fx-font-size: 12px; -fx-text-fill: #ffc107;");
+                valutazione.getChildren().add(stella);
+            }
+        } else {
+            valutazione.setVisible(false);
+        }
     }
 
 }

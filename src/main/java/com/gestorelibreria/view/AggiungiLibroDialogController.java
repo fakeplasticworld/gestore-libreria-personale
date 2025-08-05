@@ -41,11 +41,17 @@ public class AggiungiLibroDialogController {
         return libroDTO;
     }
 
+    /**
+     * Inizializza il dialogo con i valori predefiniti.
+     */
     @FXML
     private void initialize() {
         statoLetturaComboBox.getItems().setAll(StatoLettura.values());
     }
 
+    /**
+     * Gestisce il click sul pulsante OK.
+     */
     @FXML
     private void onOkClicked() {
         if (isInputValid()) {
@@ -65,6 +71,11 @@ public class AggiungiLibroDialogController {
         }
     }
 
+    /**
+     * Verifica la validità dei campi di input.
+     * 
+     * @return true se tutti i campi sono validi, false altrimenti.
+     */
     private boolean isInputValid() {
         if (isbnField.getText() == null || isbnField.getText().isEmpty() ||
                 titoloField.getText() == null || titoloField.getText().isEmpty() ||
@@ -97,6 +108,11 @@ public class AggiungiLibroDialogController {
         return true;
     }
 
+    /**
+     * Mostra un messaggio di errore in un dialogo.
+     * 
+     * @param messaggio Il messaggio di errore da visualizzare.
+     */
     private void mostraErrore(String messaggio) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Errore di Validazione");
@@ -106,6 +122,11 @@ public class AggiungiLibroDialogController {
         alert.showAndWait();
     }
     
+    /**
+     * Imposta l'icona della finestra di dialogo.
+     * 
+     * @param stage Lo stage della finestra di dialogo.
+     */
     private void setIconaStage(Stage stage) {
         try {
             Image appIcon = new Image(getClass().getResourceAsStream("/com/gestorelibreria/icons/libreria_icon.png"));
@@ -115,6 +136,9 @@ public class AggiungiLibroDialogController {
         }
     }
 
+    /**
+     * Gestisce il click sul pulsante Annulla.
+     */
     @FXML
     private void onAnnullaClicked() {
         dialogStage.close();

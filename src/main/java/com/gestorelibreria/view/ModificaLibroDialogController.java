@@ -41,11 +41,17 @@ public class ModificaLibroDialogController {
         return libroDTO;
     }
 
+    /**
+     * Inizializza il dialogo con i valori predefiniti.
+     */
     @FXML
     private void initialize() {
         statoLetturaComboBox.getItems().setAll(StatoLettura.values());
     }
 
+    /**
+     * Gestisce il click sul pulsante OK.
+     */
     public void setLibro(LibroDTO libro) {
         this.libroDTO = libro;
         isbnField.setText(libro.isbn());
@@ -60,10 +66,12 @@ public class ModificaLibroDialogController {
         statoLetturaComboBox.setValue(libro.statoLettura());
     }
 
+    /**
+     * Gestisce il click sul pulsante di conferma.
+     */
     @FXML
     private void onOkClicked() {
-         if (isInputValid()) {
-            // Se il campo valutazione è vuoto, usa -1 come default
+        if (isInputValid()) {
             int valutazione = valutazioneField.getText().isEmpty() ? -1 : Integer.parseInt(valutazioneField.getText());
             libroDTO = new LibroDTO(
                     titoloField.getText(),
@@ -77,11 +85,19 @@ public class ModificaLibroDialogController {
         }
     }
 
+    /**
+     * Gestisce il click sul pulsante Annulla.
+     */
     @FXML
     private void onAnnullaClicked() {
         dialogStage.close();
     }
 
+    /**
+     * Verifica la validità dei campi di input.
+     * 
+     * @return true se i campi sono validi, false altrimenti.
+     */
     private boolean isInputValid() {
         if (isbnField.getText() == null || isbnField.getText().isEmpty() ||
                 titoloField.getText() == null || titoloField.getText().isEmpty() ||
@@ -98,7 +114,6 @@ public class ModificaLibroDialogController {
             mostraErrore("Il campo Genere non può essere vuoto.");
             return false;
         }
-        // Validazione della valutazione se presente
         if (!valutazioneField.getText().isEmpty()) {
             try {
                 int valutazione = Integer.parseInt(valutazioneField.getText());
@@ -114,6 +129,11 @@ public class ModificaLibroDialogController {
         return true;
     }
 
+    /**
+     * Mostra un messaggio di errore in un dialog.
+     * 
+     * @param messaggio Il messaggio da visualizzare.
+     */
     private void mostraErrore(String messaggio) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Errore di Validazione");
@@ -123,6 +143,11 @@ public class ModificaLibroDialogController {
         alert.showAndWait();
     }
 
+    /**
+     * Imposta l'icona del dialogo.
+     * 
+     * @param stage Lo stage del dialogo.
+     */
     private void setIconaStage(Stage stage) {
         try {
             Image appIcon = new Image(getClass().getResourceAsStream("/com/gestorelibreria/icons/libreria_icon.png"));

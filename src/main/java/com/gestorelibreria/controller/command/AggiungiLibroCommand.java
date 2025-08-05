@@ -10,13 +10,13 @@ import com.gestorelibreria.model.Libro;
 public class AggiungiLibroCommand implements Command {
     private final Libreria libreria;
     private final Libro libroDaAggiungere;
+
     /**
      * Costruttore per inizializzare il comando con la libreria e il libro da aggiungere.
      *
      * @param libreria La libreria in cui aggiungere il libro.
      * @param libro Il libro da aggiungere alla libreria.
      */
-
     public AggiungiLibroCommand(Libreria libreria, Libro libro) {
         this.libreria = libreria;
         this.libroDaAggiungere = libro;
