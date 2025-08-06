@@ -11,33 +11,18 @@ import com.gestorelibreria.model.observer.Subject;
 import com.gestorelibreria.model.strategy.CriterioDiFiltro;
 import com.gestorelibreria.model.strategy.CriterioDiOrdinamento;
 
-public class Libreria implements Subject, Aggregate {
+public enum Libreria implements Subject, Aggregate {
 
     /**
      * Singleton per la classe Libreria.
      * Questa istanza è utilizzata per garantire che ci sia una sola libreria
      * gestita in tutta l'applicazione.
      */
-    private static Libreria instance;
+    INSTANCE;
 
     /**
-     * Costruttore privato per impedire l'istanza diretta della libreria.
-     * Utilizza il pattern Singleton per garantire un'unica istanza.
+     * Costruttore privato implicito per impedire l'istanza diretta della libreria.
      */
-    private Libreria() {
-    }
-
-    /**
-     * Metodo per ottenere l'istanza singleton della libreria.
-     * 
-     * @return L'istanza della libreria.
-     */
-    public static Libreria getInstance() {
-        if (instance == null) {
-            instance = new Libreria();
-        }
-        return instance;
-    }
 
     private final List<Libro> libri = new ArrayList<>();
     private final List<Observer> observers = new ArrayList<>();

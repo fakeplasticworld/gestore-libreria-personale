@@ -23,7 +23,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         try {
             // 1. Crea il Model (ottiene l'istanza Singleton)
-            Libreria libreria = Libreria.getInstance();
+            Libreria libreria = Libreria.INSTANCE;
 
             // 2. Carica la View dal file FXML
             // Assicurati che il file MainView.fxml si trovi in: src/main/resources/com/gestorelibreria/view/

@@ -9,6 +9,7 @@ import com.gestorelibreria.model.Libro;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,6 +30,10 @@ public class BookCardController {
     private ImageView statoLettura;
     @FXML
     private HBox valutazione;
+    @FXML
+    private Button modifica;
+    @FXML
+    private Button rimuovi;
 
     private Libro libro;
     private MainView mainView;
@@ -39,15 +44,21 @@ public class BookCardController {
      */
     private static final List<Color> COLORI = Arrays.asList(
             Color.web("#d4a373"),
+            Color.web("#c5a05a"),
+            Color.web("#c49a88"),
             Color.web("#a98467"),
-            Color.web("#b19d90ff"),
-            Color.web("#adc178"),
+            Color.web("#a0938f"),
             Color.web("#dde5b6"),
-            Color.web("#a9b388"),
-            Color.web("#83b182ff"),
+            Color.web("#adc178"),
+            Color.web("#728168"),
             Color.web("#83c5be"),
-            Color.web("#a2d2ff"),
-            Color.web("#bde0fe"));
+            Color.web("#b5ada5"),
+            Color.web("#7a8c99"),
+            Color.web("#cad2d9"),
+            Color.web("#a999ab"),
+            Color.web("#965f5f"),
+            Color.web("#62768b"),
+            Color.web("#8d8883"));
 
     /**
      * Imposta i dati del libro e aggiorna la visualizzazione della card.
@@ -151,7 +162,8 @@ public class BookCardController {
 
         if (val > 0) {
             valutazione.setVisible(true);
-            valutazione.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-padding: 2 5 2 5; -fx-background-radius: 20;");
+            valutazione.setStyle(
+                    "-fx-background-color: rgba(0, 0, 0, 0.75); -fx-padding: 2 5 2 5; -fx-background-radius: 20;");
 
             for (int i = 1; i <= 5; i++) {
                 Label stella = new Label(i <= val ? "★" : "☆");
