@@ -1,0 +1,67 @@
+.button-primario {
+    -fx-background-color: #333333;
+    background-color: #333333;
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-cursor: hand;
+    cursor: pointer;
+}
+
+.button-primario:hover {
+    -fx-background-color: #555555; 
+    background-color: #555555;
+}
+
+.button-secondario {
+    background-color: transparent;
+    -fx-border-color: #333333;
+    border-color: #333333;
+    -fx-border-width: 1px;
+    border-width: 1px;
+    -fx-border-radius: 20;
+    border-radius: 20px;
+    -fx-background-radius: 20;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-cursor: hand;
+    cursor: pointer;
+}
+
+.button-secondario:hover {
+    -fx-background-color: #f4f4f4;
+    background-color: #f4f4f4;
+    -fx-text-fill: #000000;
+}
+
+.button-distruttivo {
+    -fx-background-color: #d9534f;
+    background-color: #d9534f;
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-cursor: hand;
+    cursor: pointer;
+}
+
+.button-distruttivo:hover {
+    -fx-background-color: #c9302c;
+    background-color: #c9302c;
+}
+
+.valutazione-box {
+    -fx-background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.75);
+    -fx-padding: 2 5 2 5;
+    padding: 2px 5px 2px 5px;
+    -fx-background-radius: 20;
+}
+
+.stella-valutazione {
+    -fx-font-size: 12px;
+    font-size: 12px;
+    -fx-text-fill: #ffc107;
+}

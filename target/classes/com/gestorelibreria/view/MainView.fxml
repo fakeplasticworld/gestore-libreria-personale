@@ -18,9 +18,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.StackPane?>
+<?import java.net.URL?>
 
 <BorderPane prefHeight="510.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17"
    xmlns:fx="http://javafx.com/fxml/1">
+   <stylesheets>
+      <URL value="@style.css" />
+   </stylesheets>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
          <menus>
@@ -56,7 +60,8 @@
 
             <StackPane>
                <children>
-                  <TextField fx:id="filtroValoreField" promptText="Valore da cercare" onAction="#onFiltraClicked"/>
+                  <TextField fx:id="filtroValoreField" promptText="Valore da cercare"
+                     onAction="#onFiltraClicked" />
                   <ComboBox fx:id="filtroStatoLetturaComboBox" managed="false" prefWidth="180.0"
                      visible="false" />
                </children>
@@ -69,7 +74,7 @@
             </Label>
             <ComboBox fx:id="ordinamentoTipoComboBox" prefWidth="180.0" />
             <Button mnemonicParsing="false" onAction="#onFiltraClicked" prefHeight="25.0"
-               prefWidth="180.0" text="Filtra/Ordina" />
+               prefWidth="180.0" text="Filtra/Ordina" styleClass="button-primario"/>
 
             <VBox spacing="5.0" VBox.vgrow="ALWAYS">
                <VBox.margin>

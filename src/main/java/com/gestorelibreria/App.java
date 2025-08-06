@@ -29,7 +29,6 @@ public class App extends Application {
             // Assicurati che il file MainView.fxml si trovi in: src/main/resources/com/gestorelibreria/view/
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gestorelibreria/view/MainView.fxml"));
             
-            // --- MODIFICA PER RISOLVERE L'ERRORE ---
             // Crea manualmente l'istanza della View (il controller FXML)
             MainView view = new MainView();
             // Imposta il controller sul loader PRIMA di caricare l'FXML
@@ -65,6 +64,7 @@ public class App extends Application {
 
         } catch (IOException e) {
             System.err.println("Errore durante l'avvio dell'applicazione: impossibile caricare MainView.fxml");
+            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Si è verificato un errore imprevisto durante l'avvio.");
         }

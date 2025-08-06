@@ -162,12 +162,11 @@ public class BookCardController {
 
         if (val > 0) {
             valutazione.setVisible(true);
-            valutazione.setStyle(
-                    "-fx-background-color: rgba(0, 0, 0, 0.75); -fx-padding: 2 5 2 5; -fx-background-radius: 20;");
+            valutazione.getStyleClass().add("valutazione-box");
 
             for (int i = 1; i <= 5; i++) {
                 Label stella = new Label(i <= val ? "★" : "☆");
-                stella.setStyle("-fx-font-size: 12px; -fx-text-fill: #ffc107;");
+                stella.getStyleClass().add("stella-valutazione");
                 valutazione.getChildren().add(stella);
             }
         } else {
