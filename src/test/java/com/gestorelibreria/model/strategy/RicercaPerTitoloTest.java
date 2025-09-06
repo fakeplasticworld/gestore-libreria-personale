@@ -10,21 +10,17 @@ class RicercaPerTitoloTest {
 
     @Test
     void isMatchDovrebbeRestituireTruePerCorrispondenza() {
-        // Setup
         Libro libro = new Libro.Builder("Guerra e Pace", "Lev Tolstoj").build();
-        RicercaPerTitolo criterio = new RicercaPerTitolo("guerra"); // Cerca in minuscolo
+        RicercaPerTitolo criterio = new RicercaPerTitolo("guerra");
 
-        // Act & Assert
         assertTrue(criterio.isMatch(libro), "Dovrebbe trovare una corrispondenza parziale e case-insensitive.");
     }
 
     @Test
     void isMatchDovrebbeRestituireFalseSeNonCorrisponde() {
-        // Setup
         Libro libro = new Libro.Builder("Guerra e Pace", "Lev Tolstoj").build();
         RicercaPerTitolo criterio = new RicercaPerTitolo("Promessi Sposi");
-
-        // Act & Assert
+        
         assertFalse(criterio.isMatch(libro), "Non dovrebbe trovare una corrispondenza.");
     }
 }

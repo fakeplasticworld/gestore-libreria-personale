@@ -33,17 +33,7 @@ public class GestorePersistenza {
      * @param libreria L'istanza della libreria da salvare.
      */
     public void salva(Libreria libreria) {
-        List<Libro> listaDaSalvare = new ArrayList<>();
-        Iterator<Libro> iterator = libreria.createIterator();
-        while (iterator.hasNext()) {
-            Libro libro = iterator.next();
-            listaDaSalvare.add(libro);
-        }
-        try (FileWriter writer = new FileWriter(DEFAULT_FILENAME)) {
-            gson.toJson(listaDaSalvare, writer);
-        } catch (IOException e) {
-            System.err.println("Errore durante il salvataggio: " + e.getMessage());
-        }
+        esporta(libreria, DEFAULT_FILENAME);
     }
 
     /**
