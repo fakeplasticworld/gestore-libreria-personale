@@ -1,32 +1,7 @@
 [
   {
-    "titolo": "L\u0027amica geniale",
-    "autore": "Elena Ferrante",
-    "genere": "Romanzo",
-    "isbn": "9788804668237",
-    "valutazione": 5,
-    "statoLettura": "LETTO"
-  },
-  {
-    "titolo": "Dune",
-    "autore": "Frank Herbert",
-    "genere": "Fantascienza",
-    "isbn": "9788804680529",
-    "valutazione": 5,
-    "statoLettura": "LETTO"
-  },
-  {
-    "titolo": "La ragazza del treno",
-    "autore": "Paula Hawkins",
-    "genere": "Thriller",
-    "isbn": "9788804677147",
-    "valutazione": 3,
-    "statoLettura": "LETTO"
-  },
-  {
     "titolo": "Cecità",
     "autore": "José Saramago",
-    "genere": "Romanzo",
     "isbn": "9788807881343",
     "valutazione": 4,
     "statoLettura": "DA_LEGGERE"
@@ -34,7 +9,6 @@
   {
     "titolo": "L\u0027insostenibile leggerezza dell\u0027essere",
     "autore": "Milan Kundera",
-    "genere": "Filosofico",
     "isbn": "9788845915867",
     "valutazione": 4,
     "statoLettura": "LETTO"
@@ -42,7 +16,6 @@
   {
     "titolo": "Follia",
     "autore": "Patrick McGrath",
-    "genere": "Thriller psicologico",
     "isbn": "9788804742289",
     "valutazione": 4,
     "statoLettura": "DA_LEGGERE"
@@ -50,7 +23,6 @@
   {
     "titolo": "Il cardellino",
     "autore": "Donna Tartt",
-    "genere": "Romanzo",
     "isbn": "9788817066974",
     "valutazione": 5,
     "statoLettura": "IN_LETTURA"
@@ -58,7 +30,6 @@
   {
     "titolo": "1984",
     "autore": "George Orwell",
-    "genere": "Distopico",
     "isbn": "9788804665472",
     "valutazione": 5,
     "statoLettura": "LETTO"
@@ -66,7 +37,6 @@
   {
     "titolo": "La versione di Barney",
     "autore": "Mordecai Richler",
-    "genere": "Umoristico",
     "isbn": "9788806223038",
     "valutazione": 4,
     "statoLettura": "LETTO"
@@ -74,7 +44,6 @@
   {
     "titolo": "Circe",
     "autore": "Madeline Miller",
-    "genere": "Fantasy",
     "isbn": "9788806240219",
     "valutazione": 5,
     "statoLettura": "LETTO"
@@ -82,7 +51,6 @@
   {
     "titolo": "Finestra sul nulla",
     "autore": "Emil M. Cioran",
-    "genere": "Saggisticca",
     "isbn": "9788845936999",
     "valutazione": 4,
     "statoLettura": "IN_LETTURA"
@@ -90,7 +58,6 @@
   {
     "titolo": "Sapiens. Da animali a dei",
     "autore": "Yuval Noah Harari",
-    "genere": "Saggistica",
     "isbn": "9788845925392",
     "valutazione": 4,
     "statoLettura": "IN_LETTURA"
@@ -98,7 +65,6 @@
   {
     "titolo": "L\u0027arte di essere fragili",
     "autore": "Alessandro D\u0027Avenia",
-    "genere": "Saggistica",
     "isbn": "9788845932970",
     "valutazione": 3,
     "statoLettura": "LETTO"
@@ -106,7 +72,6 @@
   {
     "titolo": "Sillogismi dell\u0027amarezza",
     "autore": "Emil M.Cioran",
-    "genere": "Saggistica",
     "isbn": "9788845909764",
     "valutazione": 4,
     "statoLettura": "LETTO"
@@ -114,9 +79,23 @@
   {
     "titolo": "Le cronache del crepuscolo",
     "autore": "Marco Rossi",
-    "genere": "Fantasy",
     "isbn": "9788804759331",
     "valutazione": 4,
+    "statoLettura": "LETTO"
+  },
+  {
+    "titolo": "Design e Comunicazione Visiva",
+    "autore": "Bruno Munari",
+    "isbn": "9788858128787",
+    "valutazione": -1,
+    "statoLettura": "DA_LEGGERE"
+  },
+  {
+    "titolo": "L\u0027amica geniale",
+    "autore": "Elena Ferrante",
+    "genere": "Romanzo",
+    "isbn": "9788804668237",
+    "valutazione": 5,
     "statoLettura": "LETTO"
   }
 ]

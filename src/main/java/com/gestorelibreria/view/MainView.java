@@ -282,7 +282,7 @@ public class MainView implements Observer {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Conferma Importazione");
             alert.setHeaderText("L'importazione sostituirà la libreria corrente.");
-            alert.setContentText("Tutte le modifiche non salvate andranno perse. Sei sicuro di voler continuare?");
+            alert.setContentText("Si consiglia di effettuare un backup prima di continuare.");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {

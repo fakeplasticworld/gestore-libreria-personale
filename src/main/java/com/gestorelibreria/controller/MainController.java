@@ -155,14 +155,32 @@ public class MainController {
      * @param percorso Il percorso del file da importare.
      */
     public void gestisciImporta(String percorso) {
-        List<Libro> libriImportati = gestorePersistenza.importa(percorso);
-        if (libriImportati != null && !libriImportati.isEmpty()) {
+    List<Libro> libriImportati = gestorePersistenza.importa(percorso);
+    if (libriImportati != null) {
+        boolean isDataValid = true;
+        for (Libro libro : libriImportati) {
+            if (libro.getTitolo() == null || libro.getTitolo().trim().isEmpty() ||
+                libro.getAutore() == null || libro.getAutore().trim().isEmpty() ||
+                libro.getIsbn() == null || libro.getIsbn().trim().isEmpty() ||
+                libro.getGenere() == null || libro.getGenere().trim().isEmpty() ||
+                libro.getStatoLettura() == null) {
+                isDataValid = false;
+                break;
+            }
+        }
+        if (isDataValid && !libriImportati.isEmpty()) {
             libreria.sostituisciCollezione(libriImportati);
             view.mostraMessaggio("Libreria importata con successo da: " + percorso);
-        } else {
+        } else if (!isDataValid) {
+            view.mostraErrore("Importazione fallita: il file JSON non è valido o contiene dati incompleti (es. titolo, autore o stato di lettura mancanti).");
+        } 
+        else {
             view.mostraMessaggio("Nessun libro trovato nel file specificato.");
         }
+    } else {
+        view.mostraErrore("Importazione fallita: impossibile leggere il file.");
     }
+}
 
     /**
      * Gestisce l'esportazione della libreria.
